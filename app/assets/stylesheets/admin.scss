@@ -190,3 +190,31 @@ hr{
   padding:0.2em;
   margin: 0.2em;
 }
+.deleteAtv{
+  color:white;
+  background-color: darkred;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  text-decoration: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+.deleteAtv:hover{
+  color:white;
+  background-color: red;
+  text-decoration: none;
+}
+.btnAddAtv{
+  color:white;
+  background-color: #113145;
+  padding-right: 5px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+.btnAddAtv:hover{
+  color:white;
+  background-color:dodgerblue;
+  text-decoration: none;
+}

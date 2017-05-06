@@ -1,3 +1,4 @@
+
 <!-- VERTICAL MENU -->
 <nav class="navbar navbar-default sidebar" role="navigation">
   <div class="container-fluid">
@@ -19,6 +20,7 @@
     </div>
   </div>
 </nav>
+
 <!-- END VERTICAL MENU-->
 <div class="main">
 
@@ -34,20 +36,79 @@
     </div>
     <div class="opcion">
       <hr>
-      <div class="group"><span class="op-title">Actividades: <button type="button" class="btn btn-primary btn-xs">+</button></span></div>
+      <div class="group"><span class="op-title">Actividades: <button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-primary btn-xs"><b>+</b></button></span></div>
       <hr class="myLine" size="5">
-      <div class="list-group">
-        <div><a href="#" class="list-group-item">First item</a></div>
-        <div><a href="#" class="list-group-item">First item</a></div>
-      </div>
-      <hr>
-    </div>
-  </div>
-</div>
 
+      <!-- Media objects -->
+      <% @subjects.each do |s| %>
+          <% if s.aula === "FD401" %>
+            <div class="media" id="atv<%= s.id %>">
+              <div class="media-left">
+                <a href="" class="deleteAtv" id="<%= s.id %>">
+                  -
+                </a>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading"><%= s.name %></h4>
+                Dias: <%= s.days %><br>
+                Horario: <%= s.horai %> | <%= s.horaf %><br>
+                Profesor: <%= s.teacher %><br>
+              </div>
+            </div>
+            <hr>
+          <% end %>
+      <% end %>
+      <!-- En media objects -->
+
+    </div>
+
+  </div>
+
+
+
+
+</div><!-- End main div  -->
 
 
 <!-- Scripting -->
 <script type="text/javascript">
+  $(".addAtv").hide();
 
+  $(".deleteAtv").click(function(){
+      deleteAtv(this);
+  });
+
+  function showAtvForm(){
+      $(".addAtv").show();
+
+
+  }
+  function deleteAtv(env){
+      if (confirm("¿Estás seguro que quieres eliminar esta asignatura?") === true) {
+          let this_id = parseInt(env.id);
+          let ex = true;
+
+          //alert("ID: " + this_id.toString());
+
+          $.ajax({
+              url:'/admin/removeAtv',
+              type:'get',
+              dataType:'json',
+              data: {id: this_id},
+              success: function(data){
+                  let div_id = "#atv" + this_id;
+                  $(div_id).remove();
+              },
+              error: function (xhr, ajaxOptions, thrownError) {
+                  //alert(xhr.status);
+                  //alert(thrownError);
+                  ex = false;
+              }
+          });
+
+
+      } else {
+
+      }
+  }
 </script>

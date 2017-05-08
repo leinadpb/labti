@@ -58,7 +58,7 @@
                 </div>
               </div>
             </div>
-            <input type="hidden" name="subject_aula" class="form-control" id="aula" value="fd401">
+            <input type="hidden" name="subject_aula" class="form-control" id="aula" value="fd403">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -80,9 +80,9 @@
       <ul class="nav navbar-nav">
         <li ><a onclick="location.href='/admin/home'">Dashboard</a></li>
         <li ><a onclick="location.href='/admin/perfil'">Perfil</a></li>
-        <li class="active"><a onclick="location.href='/admin/fd401'">FD-401</a></li>
+        <li ><a onclick="location.href='/admin/fd401'">FD-401</a></li>
         <li ><a onclick="location.href='/admin/fd402'">FD-402</a></li>
-        <li ><a onclick="location.href='/admin/fd403'">FD-403</a></li>
+        <li class="active"><a onclick="location.href='/admin/fd403'">FD-403</a></li>
         <li ><a onclick="location.href='/admin/fd404'">FD-404</a></li>
         <li ><a onclick="location.href='/admin/fd405'">FD-405</a></li>
         <li ><a onclick="location.href='/admin/fd411'">FD-411</a></li>
@@ -98,7 +98,7 @@
 <div class="main">
   <!-- Content Here -->
   <div class="page-header" align="center">
-    <h1><small>FD401</small></h1>
+    <h1><small>FD403</small></h1>
   </div>
   <div class="container content">
     <div class="opcion">
@@ -112,21 +112,21 @@
       <hr class="myLine" size="5">
       <!-- Media objects -->
       <% @subjects.each do |s| %>
-          <% if s.aula === "fd401" %>
-            <div class="media" id="atv<%= s.id %>">
-              <div class="media-left">
-                <a href="" class="deleteAtv" id="<%= s.id %>">
-                  -
-                </a>
+          <% if s.aula === "fd403" %>
+              <div class="media" id="atv<%= s.id %>">
+                <div class="media-left">
+                  <a href="" class="deleteAtv" id="<%= s.id %>">
+                    -
+                  </a>
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading"><%= s.name %></h4>
+                  Dias: <%= s.days %><br>
+                  Horario: <%= s.horai %> | <%= s.horaf %><br>
+                  Profesor: <%= s.teacher %><br>
+                </div>
               </div>
-              <div class="media-body">
-                <h4 class="media-heading"><%= s.name %></h4>
-                Dias: <%= s.days %><br>
-                Horario: <%= s.horai %> | <%= s.horaf %><br>
-                Profesor: <%= s.teacher %><br>
-              </div>
-            </div>
-            <hr>
+              <hr>
           <% end %>
       <% end %>
       <!-- En media objects -->
@@ -136,29 +136,29 @@
 
 <!-- Scripting -->
 <script type="text/javascript">
-  $(".deleteAtv").click(function(){
-      deleteAtv(this);
-  });
-  function deleteAtv(env){
-      if (confirm("¿Estás seguro que quieres eliminar esta asignatura?") !== true) {
-      } else {
-          let this_id = parseInt(env.id);
-          let ex = true;
-          $.ajax({
-              url: '/admin/removeAtv',
-              type: 'get',
-              dataType: 'json',
-              data: {id: this_id, room: "fd401"},
-              success: function (data) {
-                  let div_id = "#atv" + this_id;
-                  $(div_id).remove();
-              },
-              error: function (xhr, ajaxOptions, thrownError) {
-                  //alert(xhr.status);
-                  //alert(thrownError);
-                  ex = false;
-              }
-          });
-      }
-  }
+    $(".deleteAtv").click(function(){
+        deleteAtv(this);
+    });
+    function deleteAtv(env){
+        if (confirm("¿Estás seguro que quieres eliminar esta asignatura?") !== true) {
+        } else {
+            let this_id = parseInt(env.id);
+            let ex = true;
+            $.ajax({
+                url: '/admin/removeAtv',
+                type: 'get',
+                dataType: 'json',
+                data: {id: this_id, room: "fd403"},
+                success: function (data) {
+                    let div_id = "#atv" + this_id;
+                    $(div_id).remove();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //alert(xhr.status);
+                    //alert(thrownError);
+                    ex = false;
+                }
+            });
+        }
+    }
 </script>

@@ -1,0 +1,176 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar asignatura</h4>
+      </div>
+      <%= form_for :subject, url:'/subjects', html:{class:'form-horizontal'} do %>
+          <div class="modal-body">
+
+            <div class="form-group"> <!-- NOMBRE -->
+              <label for="inputText1" class="col-sm-2 control-label">Nombre:</label>
+              <div class="col-sm-10">
+                <input name="subject_name" type="text" class="form-control" id="inputText1" placeholder="Asignatura..." required>
+              </div>
+            </div>
+            <div class="form-group"> <!-- PROFESOR -->
+              <label for="inputText2" class="col-sm-2 control-label">Profesor/a:</label>
+              <div class="col-sm-10">
+                <input name="subject_teacher" type="text" class="form-control" id="inputText2" placeholder="Profesor..." required>
+              </div>
+            </div>
+            <div class="form-group"> <!-- HORA INICIO -->
+              <label for="inputText3" class="col-sm-2 control-label">Hora inicio:</label>
+              <div class="col-sm-10">
+                <input name="subject_horai" type="number" min="7" max="22" class="form-control" id="inputText3" required>
+              </div>
+            </div>
+            <div class="form-group"> <!-- HORA FIN -->
+              <label for="inputText4" class="col-sm-2 control-label">Hora fin:</label>
+              <div class="col-sm-10">
+                <input name="subject_horaf" type="number" min="7" max="22" class="form-control" id="inputText4" required>
+              </div>
+            </div>
+            <div class="form-group"> <!-- DIAS -->
+              <div class="col-sm-offset-2 col-sm-10">
+                <label for="inputText5" class="col-sm-2 control-label">Dias:</label>
+                <div class="col-sm-10 checkbox">
+                  <label>
+                    <input name="op_Lun" type="checkbox"> Lun
+                  </label>
+                  <label>
+                    <input name="op_Mar" type="checkbox"> Mar
+                  </label>
+                  <label>
+                    <input name="op_Mie" type="checkbox"> Mie
+                  </label>
+                  <label>
+                    <input name="op_Jue" type="checkbox"> Jue
+                  </label>
+                  <label>
+                    <input name="op_Vie" type="checkbox"> Vie
+                  </label>
+                  <label>
+                    <input name="op_Sab" type="checkbox"> Sab
+                  </label>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" name="subject_aula" class="form-control" id="aula" value="fd413">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- VERTICAL MENU -->
+<nav class="navbar navbar-default sidebar" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand  toggle-btn" href="/app/home">LABTI - INTEC</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li ><a onclick="location.href='/admin/home'">Dashboard</a></li>
+        <!-- <li ><a onclick="location.href='/admin/perfil'">Perfil</a></li> -->
+        <li ><a onclick="location.href='/admin/fd401'">FD-401</a></li>
+        <li ><a onclick="location.href='/admin/fd402'">FD-402</a></li>
+        <li ><a onclick="location.href='/admin/fd403'">FD-403</a></li>
+        <li ><a onclick="location.href='/admin/fd404'">FD-404</a></li>
+        <li ><a onclick="location.href='/admin/fd405'">FD-405</a></li>
+        <li ><a onclick="location.href='/admin/fd411'">FD-411</a></li>
+        <li ><a onclick="location.href='/admin/fd412'">FD-412</a></li>
+        <li class="active"><a onclick="location.href='/admin/fd413'">FD-413</a></li>
+        <li ><a onclick="location.href='/admin/fd414'">FD-414</a></li>
+        <li ><a onclick="location.href='/admin/fd415'">FD-415</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- END VERTICAL MENU-->
+<div class="main">
+  <!-- Content Here -->
+  <div class="page-header" align="center">
+    <h1><small>FD412</small></h1>
+  </div>
+  <div class="container content">
+    <div class="opcion">
+      <hr>
+      <span class="op-title">Cantidad de computadoras: <!-- Get info from data base --> <span id="cant_pcs">9</span><button type="button" class="btn btn-primary btn-xs">Editar</button></span>
+      <hr>
+    </div>
+    <div class="opcion">
+      <hr>
+      <div class="group"><span class="op-title">Actividades: <button data-toggle="modal" data-target="#myModal" type="button" class="btn btn-primary btn-xs"><b>+</b></button></span></div>
+      <hr class="myLine" size="5">
+      <!-- Media objects -->
+      <% @subjects.each do |s| %>
+          <% if s.aula === "fd413" %>
+              <div class="media" id="atv<%= s.id %>">
+                <div class="media-left">
+                  <a href="" class="deleteAtv" id="<%= s.id %>">
+                    -
+                  </a>
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading"><%= s.name %></h4>
+                  Dias: <%= s.days %><br>
+                  Horario: <%= s.horai %> | <%= s.horaf %><br>
+                  Profesor: <%= s.teacher %><br>
+                </div>
+              </div>
+              <hr>
+          <% end %>
+      <% end %>
+      <% x = 0 %>
+      <%   @subjects.each do |s| %>
+          <%     if s.aula === "fd413" %>
+              <%        x = x + 1 %>
+          <%     end  %>
+      <%   end  %>
+
+      <% if x === 0 %>
+          <div class="alert alert-info" role="alert">
+            <p>Aún no hay asignaturas en esta aula...</p>
+          </div>
+      <% end %>
+      <!-- En media objects -->
+    </div>
+  </div>
+</div><!-- End main div  -->
+
+<!-- Scripting -->
+<script type="text/javascript">
+    $(".deleteAtv").click(function(){
+        deleteAtv(this);
+    });
+    function deleteAtv(env){
+        if (confirm("¿Estás seguro que quieres eliminar esta asignatura?") !== true) {
+        } else {
+            let this_id = parseInt(env.id);
+            let ex = true;
+            $.ajax({
+                url: '/admin/removeAtv',
+                type: 'get',
+                dataType: 'json',
+                data: {id: this_id, room: "fd413"},
+                success: function (data) {
+                    let div_id = "#atv" + this_id;
+                    $(div_id).remove();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //alert(xhr.status);
+                    //alert(thrownError);
+                    ex = false;
+                }
+            });
+        }
+    }
+</script>

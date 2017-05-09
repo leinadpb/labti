@@ -73,13 +73,13 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <a class="navbar-brand  toggle-btn" href="#">LABTI - INTEC</a>
+      <a class="navbar-brand  toggle-btn" href="/app/home">LABTI - INTEC</a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li ><a onclick="location.href='/admin/home'">Dashboard</a></li>
-        <li ><a onclick="location.href='/admin/perfil'">Perfil</a></li>
+        <!-- <li ><a onclick="location.href='/admin/perfil'">Perfil</a></li> -->
         <li ><a onclick="location.href='/admin/fd401'">FD-401</a></li>
         <li ><a onclick="location.href='/admin/fd402'">FD-402</a></li>
         <li ><a onclick="location.href='/admin/fd403'">FD-403</a></li>
@@ -103,7 +103,7 @@
   <div class="container content">
     <div class="opcion">
       <hr>
-      <span class="op-title">Cantidad de computadoras: <!-- Get info from data base --> <span id="cant_pcs">20</span><button type="button" class="btn btn-primary btn-xs">Editar</button></span>
+      <span class="op-title">Cantidad de computadoras: <!-- Get info from data base --> <span id="cant_pcs">30</span><button type="button" class="btn btn-primary btn-xs">Editar</button></span>
       <hr>
     </div>
     <div class="opcion">
@@ -128,6 +128,18 @@
               </div>
               <hr>
           <% end %>
+      <% end %>
+      <% x = 0 %>
+      <%   @subjects.each do |s| %>
+          <%     if s.aula === "fd411" %>
+              <%        x = x + 1 %>
+          <%     end  %>
+      <%   end  %>
+
+      <% if x === 0 %>
+          <div class="alert alert-info" role="alert">
+            <p>Aún no hay asignaturas en esta aula...</p>
+          </div>
       <% end %>
       <!-- En media objects -->
     </div>

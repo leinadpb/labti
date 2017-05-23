@@ -1,14 +1,20 @@
 <div class="page-header" align="center">
   <h1>LABTI <small>- Laboratorios TI</small></h1>
 </div>
-
 <!-- Cursos del LAB TI -->
 <div class="container">
   <div class="list-group">
-    <button type="button" class="list-group-item" onclick="show401()">FD-401</button>
+    <button type="button" class="list-group-item" onclick="show('401')">FD-401</button>
     <div class="list-group-item room" id="fd401">
       <div class="table-responsive">
         <table class="table table-bordered" id="table401">
+          <col width="50">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <col width="100">
           <tr>
             <th>H</th>
             <th>Lun</th>
@@ -21,100 +27,191 @@
         </table>
       </div>
     </div>
-    <button type="button" class="list-group-item" onclick="show402()">FD-402</button>
+    <button type="button" class="list-group-item" onclick="show('402')">FD-402</button>
     <div class="list-group-item room" id="fd402">
-      Info 402...
+      <div class="table-responsive">
+        <table class="table table-bordered" id="table402">
+          <col width="50">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <tr>
+            <th>H</th>
+            <th>Lun</th>
+            <th>Mar</th>
+            <th>Mie</th>
+            <th>Jue</th>
+            <th>Vie</th>
+            <th>Sab</th>
+          </tr>
+        </table>
+      </div>
     </div>
-    <button type="button" class="list-group-item" onclick="show403()">FD-403</button>
+    <button type="button" class="list-group-item" onclick="show('403')">FD-403</button>
     <div class="list-group-item room" id="fd403">
       Info 403...
     </div>
-    <button type="button" class="list-group-item" onclick="show404()">FD-404</button>
+    <button type="button" class="list-group-item" onclick="show('404')">FD-404</button>
     <div class="list-group-item room" id="fd404">
       Info 404...
     </div>
-    <button type="button" class="list-group-item" onclick="show405()">FD-405</button>
+    <button type="button" class="list-group-item" onclick="show('405')">FD-405</button>
     <div class="list-group-item room" id="fd405">
       Info 405...
     </div>
-    <button type="button" class="list-group-item" onclick="show411()">FD-411</button>
+    <button type="button" class="list-group-item" onclick="show('411')">FD-411</button>
     <div class="list-group-item room" id="fd411">
       Info 411...
     </div>
-    <button type="button" class="list-group-item" onclick="show412()">FD-412</button>
+    <button type="button" class="list-group-item" onclick="show('412')">FD-412</button>
     <div class="list-group-item room" id="fd412">
       Info 412...
     </div>
-    <button type="button" class="list-group-item" onclick="show413()">FD-413</button>
+    <button type="button" class="list-group-item" onclick="show('413')">FD-413</button>
     <div class="list-group-item room" id="fd413">
       Info 413...
     </div>
-    <button type="button" class="list-group-item" onclick="show414()">FD-414</button>
+    <button type="button" class="list-group-item" onclick="show('414')">FD-414</button>
     <div class="list-group-item room" id="fd414">
       Info 414...
     </div>
-    <button type="button" class="list-group-item" onclick="show415()">FD-415</button>
+    <button type="button" class="list-group-item" onclick="show('415')">FD-415</button>
     <div class="list-group-item room" id="fd415">
       Info 415...
     </div>
   </div>
 </div>
-
-
 <!-- Scripting -->
 <script type="text/javascript">
   $(".room").hide();
   $(function () {
       $('[data-toggle="popover"]').popover()
   });
+  class Subject{
+      constructor(name, horai, horaf, teacher, aula, days){
+          this.name= name;
+          this.horai = horai;
+          this.horaf = horaf;
+          this.teacher = teacher;
+          this.aula = aula;
+          this.days = days;
+      }
+      getName(){return this.name;}
+      getHorai(){return this.horai;}
+      getHoraf(){return this.horaf;}
+      getAula(){return this.aula;}
+      getTeacher(){return this.teacher;}
+      getDays(){return this.days;}
+  }
 
+  let subs = [];
 
+  <% @subjects.each do |s| %>
+    subs.push(new Subject("<%= s.name %>", "<%= s.horai %>", "<%= s.horaf %>", "<%= s.teacher %>", "<%= s.aula %>", "<%= s.days %>"));
+  <%end%>
 
-  let table = document.getElementById("table401");
-  let time = ["7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00"];
+  createSchedule(7, 22, subs, "401");
+  createSchedule(7, 22, subs, "402");
+  console.log(subs);
 
-  for(let j = 1; j <= time.length; j++){
+  function createSchedule(hi, hf, subjects, room){
+      generateTable(room, hi, hf);
+      let table = document.getElementById("table" + room); //table object
+      if(hf > hi){
+          let r = 1;
+          for(let x = hi; x <= hf; x++){
+              let rowCells = table.rows[r].cells;
 
-      let row = table.insertRow(j);
-      row.insertCell(0).innerHTML = time[j - 1];
+              for(let i = 0; i < subjects.length; i++){
 
-      for(let i = 1; i < 7; i++){
+                  if(subjects[i].getAula() === ("fd" + room) && subjects[i].getHorai() === x.toString()){
+                    //  console.log(subjects[i].getName() + " " + subjects[i].getAula());
+                      //Add subject to schedule
+                      let horas = subjects[i].getHoraf() - subjects[i].getHorai(); //duration
+                      let strDays = subjects[i].getDays();
+                      let tmpList = [];
+                     // console.log(strDays);
 
-          row.insertCell(i);
+                      let tmp = "";
+                      for(let j = 0; j < strDays.length; j++){
+                          let ch = strDays.charAt(j);
+                          if(ch === '-'){
+                              tmpList.push(tmp);
+                              tmp = ""; //reset tmp
+                          }else{
+                              tmp = tmp + ch;
+                          }
+                          //console.log(ch);
+                      }
+
+                      for(let j = 0; j < tmpList.length; j++){
+                          let x;
+                          switch (tmpList[j]){
+                              case "Lun":
+                                  x = 1;
+                                  break;
+                              case "Mar":
+                                  x = 2;
+                                  break;
+                              case "Mie":
+                                  x = 3;
+                                  break;
+                              case "Jue":
+                                  x = 4;
+                                  break;
+                              case "Vie":
+                                  x = 5;
+                                  break;
+                              case "Sab":
+                                  x = 6;
+                                  break;
+                          }
+                          console.log(subjects[i].name + " | " + subjects[i].getHorai().toString() + " | " + subjects[i].getHoraf().toString());
+                          rowCells[x].style.backgroundColor = "lightblue";
+                          rowCells[x].rowSpan = horas;
+                          rowCells[x].innerHTML = subjects[i].getName();
+
+                          let y = r;
+                          let tmpCells = null;
+                          for(let k = y + 1; k <= y + horas - 1; k++ ){
+                              tmpCells = table.rows[k].cells;
+                              tmpCells[x].remove();
+                              console.log("deleted cell");
+                          }
+                      }
+                  }else
+                  {
+                    //  console.log("If is not executing...");
+                  }
+              }
+              r++;
+          }
+       //   console.log(table.rows[6].cells.length);
+      }else{
+          console.log("ERORR! Hora final debe ser mayor a la hora inicial.");
       }
   }
 
-
-
-  function show401(){
-      $("#fd401").toggle('slow');
+  function generateTable(aula, hi, hf){
+      let table = document.getElementById("table" + aula);
+      let x = 1;
+      for(let j = hi; j <= hf; j++){
+          let row = table.insertRow(x);
+          x++;
+          row.insertCell(0).innerHTML = j;
+          for(let i = 1; i < 7; i++){
+              row.insertCell(i);
+          }
+      }
+      //let cellsrow1 = table.rows.item(1).cells;
+      //for(let i = 0; i < cellsrow1.length; i++){
+      //    cellsrow1[i].style.backgroundColor = "blue";
+      //}
   }
-  function show402(){
-      $("#fd402").toggle('slow');
+  function show(aula){
+      $("#fd" + aula).toggle('slow');
   }
-  function show403(){
-      $("#fd403").toggle('slow');
-  }
-  function show404(){
-      $("#fd404").toggle('slow');
-  }
-  function show405(){
-      $("#fd405").toggle('slow');
-  }
-  function show411(){
-      $("#fd411").toggle('slow');
-  }
-  function show412(){
-      $("#fd405").toggle('slow');
-  }
-  function show412(){
-      $("#fd412").toggle('slow');
-  }
-  function show413(){
-      $("#fd413").toggle('slow');
-  }
-  function show414(){
-      $("#fd414").toggle('slow');
-  }
-
 </script>

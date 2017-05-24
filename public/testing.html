@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="table-responsive">
+    <table class="table table-bordered" id="myTable" border="1">
+        <col width="50">
+        <col width="100">
+        <col width="100">
+        <col width="100">
+        <col width="100">
+        <col width="100">
+        <col width="100">
+        <tr>
+            <th>H</th>
+            <th>Lun</th>
+            <th>Mar</th>
+            <th>Mie</th>
+            <th>Jue</th>
+            <th>Vie</th>
+            <th>Sab</th>
+        </tr>
+        <tr>
+            <th>7</th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+        </tr>
+        <tr>
+            <th>8</th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+        </tr>
+        <tr>
+            <th>9</th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+        </tr>
+        <tr>
+            <th>10</th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+        </tr>
+        <tr>
+            <th>11</th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+        </tr>
+        <tr>
+            <th>12</th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+        </tr>
+        <tr>
+            <th>13</th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+        </tr>
+        <tr>
+            <th>14</th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+    let table = document.getElementById("myTable");
+    let cells = table.rows[1].cells;
+
+    let r = 1;
+    let horas = 3;
+
+
+    /*
+     for(let i = r + 1; i < r + 1 + horas - 1; i++){
+     rows = table.rows[i];
+     rows.deleteCell(1);
+     }
+     */
+    let rows = null;
+    let p = horas - 1;
+    let g = r+1;
+    while(p > 0){
+        console.log(p);
+        rows = table.rows[g];
+        rows.deleteCell(1);
+        p--;
+        g++;
+
+    }
+
+    cells[1].rowSpan = 3;
+    cells = table.rows[3].cells;
+    cells[5].rowSpan = 4;
+
+</script>
+
+</body>
+</html>

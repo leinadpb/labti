@@ -133,7 +133,6 @@
                       let horas = subjects[i].getHoraf() - subjects[i].getHorai(); //duration
                       let strDays = subjects[i].getDays();
                       let tmpList = [];
-                     // console.log(strDays);
 
                       let tmp = "";
                       for(let j = 0; j < strDays.length; j++){
@@ -144,52 +143,40 @@
                           }else{
                               tmp = tmp + ch;
                           }
-                          //console.log(ch);
                       }
 
                       for(let j = 0; j < tmpList.length; j++){
-                          let x;
+                          let d;
                           switch (tmpList[j]){
                               case "Lun":
-                                  x = 1;
+                                  d = 1;
                                   break;
                               case "Mar":
-                                  x = 2;
+                                  d = 2;
                                   break;
                               case "Mie":
-                                  x = 3;
+                                  d = 3;
                                   break;
                               case "Jue":
-                                  x = 4;
+                                  d = 4;
                                   break;
                               case "Vie":
-                                  x = 5;
+                                  d = 5;
                                   break;
                               case "Sab":
-                                  x = 6;
+                                  d = 6;
                                   break;
                           }
-                          console.log(subjects[i].name + " | " + subjects[i].getHorai().toString() + " | " + subjects[i].getHoraf().toString());
-                          rowCells[x].style.backgroundColor = "lightblue";
-                          rowCells[x].rowSpan = horas;
-                          rowCells[x].innerHTML = subjects[i].getName();
+                          rowCells[d].style.backgroundColor = "lightblue";
+                          rowCells[d].rowSpan = horas;
+                          rowCells[d].innerHTML = subjects[i].getName();
+                          rowCells[d].style.color = "black";
 
-                          let y = r;
-                          let tmpCells = null;
-                          for(let k = y + 1; k <= y + horas - 1; k++ ){
-                              tmpCells = table.rows[k].cells;
-                              tmpCells[x].remove();
-                              console.log("deleted cell");
-                          }
                       }
-                  }else
-                  {
-                    //  console.log("If is not executing...");
-                  }
+                  }else { }
               }
               r++;
           }
-       //   console.log(table.rows[6].cells.length);
       }else{
           console.log("ERORR! Hora final debe ser mayor a la hora inicial.");
       }
@@ -206,10 +193,6 @@
               row.insertCell(i);
           }
       }
-      //let cellsrow1 = table.rows.item(1).cells;
-      //for(let i = 0; i < cellsrow1.length; i++){
-      //    cellsrow1[i].style.backgroundColor = "blue";
-      //}
   }
   function show(aula){
       $("#fd" + aula).toggle('slow');
